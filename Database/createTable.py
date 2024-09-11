@@ -32,7 +32,12 @@ def create_table(dept_name, passout_year):
         query = base_query.format(dept_name=dept_name, passout_year=passout_year)
 
         # Execute the query
-        cur.execute(query)
+        try:
+            cur.execute(query)
+            print("Table created successfully")
+        except errors.DuplicateTable as e:
+            print(e)
+            cur.execute("ROLLBACK;")
 
         # Commit the transaction
         conn.commit()
