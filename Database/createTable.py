@@ -1,5 +1,6 @@
 import psycopg2
 from psycopg2 import errors
+from connection import Credentials
 
 # Write the base query to create the tables in the database
 base_query = """
@@ -16,11 +17,11 @@ def create_table(dept_name, passout_year):
 
         # Connect with the db
         conn = psycopg2.connect(
-            dbname='attendance',
-            user = 'postgres',
-            password = 'secret',
-            host = 'localhost',
-            port = '5432'
+            dbname = Credentials.dbname,
+            user = Credentials.user,
+            password = Credentials.password,
+            host = Credentials.host,
+            port = Credentials.port
         )
 
         # Create a cursor object
