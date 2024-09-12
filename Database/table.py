@@ -2,7 +2,7 @@ import psycopg2
 from psycopg2 import errors
 from connection import Credentials
 
-# Base queries to create and delete tables in the database
+# CREATE STUDENT TABLE
 create_query = """
     CREATE TABLE {dept_name}_p{passout_year}_students (
         s_id SERIAL PRIMARY KEY,
@@ -12,13 +12,19 @@ create_query = """
     );
 """
 
+# DELETE STUDENT TABLE
 delete_query = """
     DROP TABLE {dept_name}_p{passout_year}_students;
 """
 
+# DELETE FACULTY TABLE
+delete_faculty_query = """
+    DROP TABLE faculties;
+"""
 
-# Begin the function to create table
-def create_table(dept_name, passout_year):
+
+# Function to create student table
+def create_student_table(dept_name, passout_year):
     try:
 
         # Connect with the db
@@ -52,14 +58,11 @@ def create_table(dept_name, passout_year):
         cur.close()
         conn.close()
 
-    except errors.DuplicateTable:
-        print("Table already exists")
-
     except Exception as e:
         print(e)
 
-# Begin the function to delete table
-def delete_table(dept_name, passout_year):
+# Function to delete student table
+def delete_student_table(dept_name, passout_year):
     try:
 
         # Connect with the db
@@ -98,6 +101,81 @@ def delete_table(dept_name, passout_year):
     except Exception as e:
         print(e)
 
+# Function to create faculty table
+def create_faculty_table():
+    try:
 
-# create_table('cse', 2025)
-# delete_table('cse', 2025)
+        # Connect with the db
+        conn = psycopg2.connect(
+            dbname = Credentials.dbname,
+            user = Credentials.user,
+            password = Credentials.password,
+            host = Credentials.host,
+            port = Credentials.port
+        )
+        # Create a cursor object
+        cur = conn.cursor()
+        cur.execute("BEGIN;")
+
+        try:
+            # CREATE FACULTY TABLE
+            cur.execute("""
+                CREATE TABLE faculties (
+                    f_id SERIAL PRIMARY KEY,
+                    f_serial INT UNIQUE,
+                    firstname VARCHAR(50),
+                    lastname VARCHAR(50),
+                    department VARCHAR(50)
+                );
+            """)
+            print("Table created successfully")
+        except errors.DuplicateTable as e:
+            print(e)
+            cur.execute("ROLLBACK;")
+
+        # Commit the transaction
+        conn.commit()
+
+        # Close the cursor & connection
+        cur.close()
+        conn.close()
+
+    except Exception as e:
+        print(e)
+
+# Function to delete faculty table
+def delete_faculty_table():
+    try:
+
+        # Connect with the db
+        conn = psycopg2.connect(
+            dbname = Credentials.dbname,
+            user = Credentials.user,
+            password = Credentials.password,
+            host = Credentials.host,
+            port = Credentials.port
+        )
+        # Create a cursor object
+        cur = conn.cursor()
+        cur.execute("BEGIN;")
+
+        # Execute the query
+        try:
+            cur.execute("DROP TABLE faculties;")
+            print("Table deleted successfully")
+        except errors.ProgrammingError as e:
+            print(e)
+            cur.execute("ROLLBACK;")
+
+        # Commit the transaction
+        conn.commit()
+
+        # Close the cursor & connection
+        cur.close()
+        conn.close()
+
+    except errors.UndefinedTable:
+        print("Table does not exists")
+
+    except Exception as e:
+        print(e)
