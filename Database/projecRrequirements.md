@@ -34,9 +34,13 @@
 - `Insert new students into the database - for new admissions`
 - `Delete students from the database - for students who have left`
 - `Update student details - for students who have changed their details`
+- `Query student details - for students who want to know their details`
+- `Query students based on their department - for faculties who want to know the students in their department`
 
 ### For Faculties
 - `Insert new faculties into the database - for new faculties`
 - `Delete faculties from the database - for faculties who have left`
 - `Update faculty details - for faculties who have changed their details`
+- `Query faculty details - for faculties who want to know their details`
+- `Query faculties based on their department - for students who want to know the faculties in their department`
 
