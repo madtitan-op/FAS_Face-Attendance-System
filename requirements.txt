@@ -1,0 +1,4 @@
+psycopg2
+tkinter
+numpy
+cv2
