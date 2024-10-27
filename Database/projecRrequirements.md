@@ -1,4 +1,15 @@
-# For New Tables
+# FOR STORING ATTENDANCE DETAILS
+### For Students
+|  roll  |    date    |  status |
+|:------:|:----------:|:-------:|
+| 121001 | 14-09-2024 | Present |
+| 121002 | 14-09-2024 | Present |
+
+
+<br>
+
+# FOR STORING STUDENT & FACULTY DETAILS
+## For New Tables
 ### For Students
 - Create a new table for student details
     - `Student ID (auto-generated primary key)`
@@ -29,7 +40,7 @@
 
 <br><br>
 
-# For Already Existing Tables
+## For Already Existing Tables
 ### For Students
 - `Insert new students into the database - for new admissions`
 - `Delete students from the database - for students who have left`

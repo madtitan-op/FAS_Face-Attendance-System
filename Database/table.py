@@ -564,3 +564,4 @@ def get_all_faculties():
 
     except Exception as e:
         print(e)
+
